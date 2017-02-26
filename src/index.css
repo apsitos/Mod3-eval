@@ -1,0 +1,38 @@
+body {
+  text-align: center;
+  background-color: thistle;
+  font-family: fantasy;
+}
+
+#add-btn, #score-btn{
+  font-family: monospace;
+  font-size: 18px;
+  border-radius: 10px;
+  background-color: yellow;
+}
+
+#add-btn:hover, #score-btn:hover {
+  background-color: steelblue;
+}
+
+.quiz {
+  margin: auto 150px;
+}
+
+.questions {
+
+}
+
+#answers {
+  text-align: right;
+  font-family: 'Trebuchet';
+  color: DarkCyan;
+}
+
+input {
+  margin-left: 10px;
+}
+
+.answer-choice {
+  margin: 20px 30px;
+}

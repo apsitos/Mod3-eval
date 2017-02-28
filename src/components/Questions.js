@@ -10,9 +10,9 @@ export default class Questions extends React.Component {
           <div key={question.id}>
             <h2>{question.title}</h2>
             <Answers
+              setSelectedAnswer={this.props.setSelectedAnswer}
               questionId={question.id}
               answers={question.answers}
-              updateScores={this.props.updateScores}
             />
           </div>
         </form>

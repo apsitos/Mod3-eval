@@ -15,8 +15,8 @@ export default class App extends React.Component {
     axios.get('/quizzes', {})
     .then((response) =>
       this.setState({ quizzes: response.data.quizzes }))
-    .catch(() => {
-      console.log('nope')
+    .catch((error) => {
+      console.log('API call: failed: ', error)
     })
   }
 
@@ -24,7 +24,6 @@ export default class App extends React.Component {
   render(){
     return(
       <div>
-        <button id="add-btn">Add a Quiz!</button>
         <Quizzes quizzes={this.state.quizzes}/>
       </div>
     )

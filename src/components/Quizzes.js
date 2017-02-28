@@ -1,24 +1,13 @@
 import React from 'react';
-import Questions from './Questions'
+import Questions from './Questions';
+import axios from 'axios';
 
 export default class Quizzes extends React.Component {
   constructor() {
     super()
     this.state = {
-      scores: {},
-      total: 0,
-      submitted: false
+      selectedScores: {}
     }
-  }
-
-  updateScores(questionId, score) {
-    const scores = {...this.state.scores}
-    Object.assign(scores, { [questionId]: score })
-    const total = Object.keys(scores)
-      .map(key => scores[key])
-      .reduce((a,b) => a + b)
-
-    this.setState({ scores, total, submitted: false })
   }
 
   loadQuizzes() {
@@ -27,19 +16,31 @@ export default class Quizzes extends React.Component {
         <div key={quiz.id}>
           <h1>{quiz.title}</h1>
           <Questions
-            updateScores={this.updateScores}
+            setSelectedAnswer={() => this.setSelectedAnswer.bind(this)}
             questions={quiz.questions}/>
         </div>
       )
     })
   }
 
-  showTotal(quizSubmitted) {
-    if (quizSubmitted) return <h1>Total: {this.state.total}</h1>
+  sumScore(){
+    let totalScore = this.state.selectedScores.reduce((a, num) => a + num)
+    console.log('totalScore:', totalScore);
+    return totalScore;
+  }
+
+  setSelectedAnswer(questionId, scoreValue){
+    console.log('setSelectedAnswer:', questionId, scoreValue);
+    const updatedScores = Object.assign(this.state.selectedScores, {[questionId]: scoreValue})
+    console.log('updatedScores:', updatedScores);
+    this.setState({ selectedScores: updatedScores })
   }
 
   handleSubmit() {
-    this.setState({ submitted: true })
+    const total = this.sumScore();
+    axios.post('/scores', {
+      score: total
+    })
   }
 
   render(){
@@ -47,7 +48,6 @@ export default class Quizzes extends React.Component {
       <div className="quiz">
         {this.loadQuizzes()}
         <button id="score-btn" onClick={() => this.handleSubmit()}>Score Me!</button>
-        {this.showTotal(this.state.submitted)}
       </div>
     )
   }

@@ -2,18 +2,10 @@ import React from 'react';
 import '../App.css'
 
 export default class Answers extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      score: 0
-    }
-  }
+
 
   handleChange(score){
-    const { updateScores, questionId } = this.props
-    this.setState({ score }, () => {
-      updateScores(questionId, score)
-    })
+    this.props.setSelectedAnswer(this.props.questionId, score)
   }
 
   loadAnswers(e) {
@@ -27,7 +19,6 @@ export default class Answers extends React.Component {
                   onChange={(e) => this.handleChange(answers.score)}/>
           </h3>
 
-          {/* <h4>{answers.score}</h4> */}
         </div>
       )
 
